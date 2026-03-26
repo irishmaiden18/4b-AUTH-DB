@@ -4,17 +4,13 @@
 // import express
 const express = require('express');
 
-// import morgan
-const logger = require("morgan");
-
-// connect to MongoDB
-const connectToMongoDB = require("./database/connectToMongoDB")
-
 // set up the express app
 const app = express();
 
-// set up the port
-const PORT = 3000;
+// import morgan
+const logger = require("morgan");
+
+// set up middleware
 
 // set up morgan
 app.use(logger("dev"))
@@ -22,6 +18,15 @@ app.use(logger("dev"))
 // format our express body
 app.use(express.json())
 
+// connect to MongoDB
+const connectToMongoDB = require("./database/connectToMongoDB")
+
+// import and use the user router
+const usersRouter = require("./routes/users-router")
+app.use("/api/v1/users", usersRouter)
+
+// set up the port
+const PORT = 3000;
 
 // start listening
 app.listen(PORT, () => {
@@ -30,3 +35,5 @@ app.listen(PORT, () => {
     // call the connectToMongoDB function
     connectToMongoDB()
 })
+
+//220

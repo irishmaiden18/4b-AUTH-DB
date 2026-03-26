@@ -10,6 +10,7 @@ dotenv.config()
 // create a connection function that connects to our database
 // everything that has to do with our database requires async/await
 const connectToMongoDB = async () => {
+    
     try {
 
         // mongoose.connect function attempts to use the connection string (MONGODB_URI) to make a connection to the database we created
