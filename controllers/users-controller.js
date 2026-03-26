@@ -43,5 +43,41 @@ const createUser = async (userData) => {
 
 }
 
+
+const loginUser = async (userData) => {
+
+    try {
+
+        // verify that username exists in db
+        const user = await User.findOne({username: userData.username})
+
+        // if the username is not in our database
+        if (!user) {
+
+            // throw an error
+            throw "User not found"
+        }
+
+        // compare the incoming passwrord with the hashed password in the database
+        // db.compare(incomingPassword, hashedPassword)
+        const isCorrectPassword = await bcrypt.compare(userData.password, user.password)
+
+        // if the passwords DONT match
+        if(!isCorrectPassword) {
+
+            // throw an error
+            throw "Passwords do NOT match"
+        }
+
+        return user
+        
+    } catch (error) {
+        
+        // propogates error to router file
+        throw error
+    }
+
+}
+
 // export controller functions
-module.exports = { createUser }
+module.exports = { createUser, loginUser }

@@ -35,5 +35,3 @@ app.listen(PORT, () => {
     // call the connectToMongoDB function
     connectToMongoDB()
 })
-
-//220
