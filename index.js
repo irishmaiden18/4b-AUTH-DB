@@ -1,5 +1,6 @@
 // npm init -y
 // npm i express morgan mongoose dotenv bcrypt
+// npm i jsonwebtoken
 
 // import express
 const express = require('express');

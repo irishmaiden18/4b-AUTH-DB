@@ -7,6 +7,34 @@ const router = express.Router();
 // import controller functionality
 const { createUser, loginUser } = require("../controllers/users-controller");
 
+// import middleware function
+const verifyToken = require("../middleware/authMiddleware")
+
+// handle GET requests to /api/v1/users/profile
+// anything that has to do with out database needs async await
+// run verifyToken function as middleware right before it hits the /profile route
+router.get("/profile", verifyToken, (req, res) => {
+
+    try {
+        
+        // send a success response to the user
+        res.json ({
+            message: "success",
+            payload: "SECURE USER PROFILE INFORMATION!"
+        })
+
+    } catch (error) {
+        
+        // send a failure response to the user
+        res.status(500).json ({
+            message: "failure",
+            payload: error. message
+        })
+
+    }
+
+})
+
 // handle POST requests to /api/v1/users
 // anything that has to do with out database needs async await
 router.post("/", async (req,res) => {
@@ -44,7 +72,8 @@ router.post("/login", async (req, res) => {
         // send a success response to the user including the logged in status
         res.json ({
             message: "success",
-            payload: `${userLoggedIn.username} has logged in successfully!`
+            payload: `${userLoggedIn.username} has logged in successfully!`,
+            token: userLoggedIn.token 
         })
 
     } catch (error) {
